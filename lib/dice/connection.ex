@@ -41,7 +41,6 @@ defmodule Dice.Connection do
   def get_updates(offset) do
     case get("/getUpdates?offset=#{offset}") do
       {:ok, result} ->
-        #Logger.debug(inspect(result))
         result.body["result"]
 
       error ->
