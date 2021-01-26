@@ -14,9 +14,10 @@ defmodule Dice.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Dice.PubSub},
       # Start the Endpoint (http/https)
-      DiceWeb.Endpoint
+      DiceWeb.Endpoint,
       # Start a worker by calling: Dice.Worker.start_link(arg)
       # {Dice.Worker, arg}
+      Dice.Verification
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
