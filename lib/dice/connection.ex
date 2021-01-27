@@ -53,4 +53,8 @@ defmodule Dice.Connection do
     message = URI.encode(message)
     get("/sendMessage?chat_id=#{chat_id}&text=#{message}")
   end
+
+  def send_sticker(chat_id, sticker_id) do
+    get("/sendSticker?chat_id=#{chat_id}&sticker=#{sticker_id}")
+  end
 end

@@ -13,14 +13,29 @@ defmodule Dice.Reply do
       text == "/random" ->
         Dice.Connection.send_message(chat_id, Enum.random(@phrases))
 
-      Regex.match?(~r|/r*|, text) ->
+      Regex.match?(~r|[/r, /roll] [[:digit:]]|, text) ->
         number =
           text
           |> String.split(" ", trim: true)
           |> List.last()
           |> String.to_integer()
 
-        Dice.Connection.send_message(chat_id, "#{Enum.random(1..number)}")
+        Dice.Connection.send_message(
+          chat_id,
+          "Rolling a d#{number}! Result: #{Enum.random(1..number)}"
+        )
+
+      text == "/paw" ->
+        Dice.Connection.send_sticker(
+          chat_id,
+          "CAACAgEAAxkBAANeYBCKLIhaKQwOobteRP3a5quwUsIAAh8AAxeZ2Q7IeDvomNaN1B4E"
+        )
+
+      text == "/cutie" ->
+        Dice.Connection.send_sticker(
+          chat_id,
+          "CAACAgEAAxkBAANyYBDao0rvEg4hd3aH-JM7qRAVXQQAAgUAA5T5DDXKWqGUl7FB1R4E"
+        )
 
       true ->
         Dice.Connection.send_message(chat_id, "lul wat")
