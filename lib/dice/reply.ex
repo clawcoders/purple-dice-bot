@@ -1,17 +1,19 @@
 defmodule Dice.Reply do
-  @phrases [
-    "Mas o que esse deus tem com cozinha francesa?\n  -Kaulo Pogos",
-    "FALTOU UM!!!\n  -Bambi",
-    "I'll step on your face!\n  -Luna Shiry"
-  ]
+  alias Dice.Lists
 
   def answer(%{"message" => %{"chat" => %{"id" => chat_id}, "text" => text}}) do
     cond do
+      text == "/char" ->
+        Dice.Connection.send_message(
+          chat_id,
+          "Você é um #{Enum.random(Lists.races())} #{Enum.random(Lists.classes())}, que #{Enum.random(Lists.lore())} e #{Enum.random(Lists.objective())}."
+        )
+
       text == "/test" ->
         Dice.Connection.send_message(chat_id, "success I guess")
 
-      text == "/random" ->
-        Dice.Connection.send_message(chat_id, Enum.random(@phrases))
+      text == "/quote" ->
+        Dice.Connection.send_message(chat_id, Enum.random(Lists.quotes()))
 
       Regex.match?(~r|[/r, /roll] [[:digit:]]|, text) ->
         number =
@@ -22,7 +24,7 @@ defmodule Dice.Reply do
 
         Dice.Connection.send_message(
           chat_id,
-          "Rolling a d#{number}! Result: #{Enum.random(1..number)}"
+          "Rodando um d#{number}! Resultado: #{Enum.random(1..number)}"
         )
 
       text == "/paw" ->
