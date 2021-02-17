@@ -29,17 +29,27 @@ defmodule Dice.Reply do
           "CAACAgEAAxkBAANyYBDao0rvEg4hd3aH-JM7qRAVXQQAAgUAA5T5DDXKWqGUl7FB1R4E"
         )
 
-      Regex.match?(~r'^(/r|/roll) [[:digit:]]+$', text) ->
-        number =
+      Regex.match?(~r'^(/r|/roll) ([1-9][0-9]*d[1-9][0-9]*|[0-9]*|\+|\-|/|\*| )+$', text) ->
+        {result, _} =
           text
-          |> String.split(" ", trim: true)
-          |> List.last()
-          |> String.to_integer()
+          |> String.split(~r'(/r |/roll |\+|\-|/|\*)', include_captures: true, trim: true)
+          # this thing doesn't work with only the trim: true on the split, so it needs this line aswell
+          |> Enum.map(&String.trim/1)
+          |> List.delete_at(0)
+          |> Enum.map(&multiply_dice/1)
+          |> Enum.reduce(fn x, acc -> acc <> x end)
+          |> String.replace(~r'(\+|\-|/|\*)+$', "")
+          |> Code.eval_string()
+
+        text =
+          text
+          |> String.replace(~r'(/r|/roll) ', "")
 
         Dice.Connection.send_message(
           chat_id,
-          "Rodando um d#{number}! Resultado: #{Enum.random(1..number)}"
+          "Calculando #{text}! Resultado: #{result}"
         )
+        |> IO.inspect()
 
       Regex.match?(~r'paw', text) ->
         random_paw(chat_id)
@@ -58,6 +68,28 @@ defmodule Dice.Reply do
 
   def answer(_) do
     :ok
+  end
+
+  defp multiply_dice(text) do
+    cond do
+      Regex.match?(~r'^[0-9]+d[0-9]+$', text) ->
+        [ammount, dice] =
+          text
+          |> String.split("d")
+          |> Enum.map(&String.to_integer/1)
+
+        (ammount * Enum.random(1..dice))
+        |> Integer.to_string()
+
+      Regex.match?(~r'^[0-9]+$', text) ->
+        text
+
+      Regex.match?(~r'(\+|\-|\/|\*)', text) ->
+        text
+
+      true ->
+        0
+    end
   end
 
   defp random_paw(chat_id) do
