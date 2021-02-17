@@ -49,7 +49,6 @@ defmodule Dice.Reply do
           chat_id,
           "Calculando #{text}! Resultado: #{result}"
         )
-        |> IO.inspect()
 
       Regex.match?(~r'paw', text) ->
         random_paw(chat_id)
