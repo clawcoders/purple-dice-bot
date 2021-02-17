@@ -50,7 +50,7 @@ defmodule Dice.Connection do
   end
 
   def send_message(chat_id, message) do
-    message = URI.encode(message)
+    message = URI.encode_www_form(message)
     get("/sendMessage?chat_id=#{chat_id}&text=#{message}")
   end
 
