@@ -33,7 +33,6 @@ defmodule Dice.Reply do
         {result, _} =
           text
           |> String.split(~r'(/r |/roll |\+|\-|/|\*)', include_captures: true, trim: true)
-          # this thing doesn't work with only the trim: true on the split, so it needs this line aswell
           |> Enum.map(&String.trim/1)
           |> List.delete_at(0)
           |> Enum.map(&multiply_dice/1)
@@ -77,7 +76,8 @@ defmodule Dice.Reply do
           |> String.split("d")
           |> Enum.map(&String.to_integer/1)
 
-        (ammount * Enum.random(1..dice))
+        Enum.map(1..ammount, fn _ -> Enum.random(1..dice) end)
+        |> Enum.reduce(fn x, acc -> x + acc end)
         |> Integer.to_string()
 
       Regex.match?(~r'^[0-9]+$', text) ->
