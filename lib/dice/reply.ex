@@ -53,7 +53,7 @@ defmodule Dice.Reply do
         random_paw(chat_id)
 
       true ->
-        Dice.Connection.send_message(chat_id, "lul wat")
+        :ok
     end
   end
 
@@ -92,7 +92,7 @@ defmodule Dice.Reply do
   end
 
   defp random_paw(chat_id) do
-    random_num = Enum.random(1..5)
+    random_num = Enum.random(1..10)
 
     if random_num == 1 do
       Dice.Connection.send_sticker(
