@@ -13,7 +13,7 @@ defmodule Dice.Verification do
 
   def handle_info(:work, state) do
     update = Dice.Connection.get_updates(state + 1)
-    Enum.each(update, &Dice.Reply.answer/1)
+    Task.start(fn -> Enum.each(update, &Dice.Reply.answer/1) end)
 
     schedule_work()
 

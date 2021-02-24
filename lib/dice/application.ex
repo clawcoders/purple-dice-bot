@@ -8,7 +8,7 @@ defmodule Dice.Application do
   def start(_type, _args) do
     children = [
       # Start the Ecto repository
-      Dice.Repo,
+      #Dice.Repo,
       # Start the Telemetry supervisor
       DiceWeb.Telemetry,
       # Start the PubSub system

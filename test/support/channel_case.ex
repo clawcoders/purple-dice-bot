@@ -28,13 +28,13 @@ defmodule DiceWeb.ChannelCase do
     end
   end
 
-  setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Dice.Repo)
-
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Dice.Repo, {:shared, self()})
-    end
-
-    :ok
-  end
+# setup tags do
+#   :ok = Ecto.Adapters.SQL.Sandbox.checkout(Dice.Repo)
+#
+#   unless tags[:async] do
+#     Ecto.Adapters.SQL.Sandbox.mode(Dice.Repo, {:shared, self()})
+#   end
+#
+#   :ok
+# end
 end

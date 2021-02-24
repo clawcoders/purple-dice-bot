@@ -7,8 +7,8 @@
 # General application configuration
 use Mix.Config
 
-config :dice,
-  ecto_repos: [Dice.Repo]
+#config :dice,
+#  ecto_repos: [Dice.Repo]
 
 # Configures the endpoint
 config :dice, DiceWeb.Endpoint,
