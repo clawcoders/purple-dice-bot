@@ -1,5 +1,6 @@
 defmodule Dice.Verification do
   use GenServer
+  require Logger
 
   def start_link(_) do
     GenServer.start_link(__MODULE__, 0)
@@ -18,6 +19,11 @@ defmodule Dice.Verification do
     schedule_work()
 
     {:noreply, Map.get(List.last(update) || %{}, "update_id", state)}
+  end
+
+  def handle_info(atom, state) do
+    Logger.warn(inspect(atom))
+    {:noreply, state}
   end
 
   def schedule_work do

@@ -4,12 +4,12 @@
 # remember to add this file to your .gitignore.
 use Mix.Config
 
-database_url =
-  System.get_env("DATABASE_URL") ||
-    raise """
-    environment variable DATABASE_URL is missing.
-    For example: ecto://USER:PASS@HOST/DATABASE
-    """
+#atabase_url =
+# System.get_env("DATABASE_URL") ||
+#   raise """
+#   environment variable DATABASE_URL is missing.
+#   For example: ecto://USER:PASS@HOST/DATABASE
+#   """
 
 #onfig :dice, Dice.Repo,
 # # ssl: true,
@@ -22,6 +22,13 @@ secret_key_base =
     environment variable SECRET_KEY_BASE is missing.
     You can generate one by calling: mix phx.gen.secret
     """
+
+config :dice,
+  bot_token:
+    System.get_env("BOT_TOKEN") ||
+      raise("""
+      environment variable BOT_TOKEN is missing.
+      """)
 
 config :dice, DiceWeb.Endpoint,
   http: [

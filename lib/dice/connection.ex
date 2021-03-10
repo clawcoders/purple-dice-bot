@@ -45,7 +45,8 @@ defmodule Dice.Connection do
         result.body["result"]
 
       error ->
-        error
+        Logger.warn(inspect(error))
+        []
     end
   end
 
