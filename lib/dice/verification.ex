@@ -1,4 +1,5 @@
 defmodule Dice.Verification do
+  @moduledoc false
   use GenServer
   require Logger
 

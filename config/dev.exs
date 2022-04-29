@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 config :dice,
   bot_token:
@@ -8,7 +8,7 @@ config :dice,
       """)
 
 # Configure your database
-#onfig :dice, Dice.Repo,
+# onfig :dice, Dice.Repo,
 # username: "postgres",
 # password: "postgres",
 # database: "dice_dev",

@@ -1,16 +1,19 @@
 defmodule Dice.Connection do
+  @moduledoc false
   use Tesla
 
   require Logger
 
-  plug Tesla.Middleware.BaseUrl,
-       "https://api.telegram.org/bot#{Application.get_env(:dice, :bot_token)}"
+  plug(
+    Tesla.Middleware.BaseUrl,
+    "https://api.telegram.org/bot#{Application.get_env(:dice, :bot_token)}"
+  )
 
-  plug Tesla.Middleware.JSON
+  plug(Tesla.Middleware.JSON)
 
-  def set_webhook do
-    get("/setWebhook?url=189.32.180.174:8443")
-  end
+  #  def set_webhook do
+  #    get("/setWebhook?url=189.32.180.174:8443")
+  #  end
 
   @doc """
   [
@@ -41,7 +44,7 @@ defmodule Dice.Connection do
   def get_updates(offset) do
     case get("/getUpdates?offset=#{offset}") do
       {:ok, result} ->
-        #Logger.debug(inspect(result))
+        Logger.debug(inspect(result))
         result.body["result"]
 
       error ->
