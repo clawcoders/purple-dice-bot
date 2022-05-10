@@ -1,21 +1,26 @@
 defmodule Dice.Reply do
-  alias Dice.Lists
+  @moduledoc """
+  This module checks what message was sent and sends a reply back
+  """
+
+  #  alias Dice.Lists
+  #  I'll be translating these lists to english in the future
 
   def answer(%{"message" => %{"chat" => %{"id" => chat_id}, "text" => text}}) do
     cond do
-      text == "/char" ->
-        Dice.Connection.send_message(
-          chat_id,
-          "Você é um #{Enum.random(Lists.races())} #{Enum.random(Lists.classes())}, que #{
-            Enum.random(Lists.lore())
-          } e #{Enum.random(Lists.objective())}."
-        )
+      #      text == "/char" ->
+      #        Dice.Connection.send_message(
+      #          chat_id,
+      #          "Você é um #{Enum.random(Lists.races())} #{Enum.random(Lists.classes())}, que #{
+      #            Enum.random(Lists.lore())
+      #          } e #{Enum.random(Lists.objective())}."
+      #        )
 
-      text == "/test" ->
-        Dice.Connection.send_message(chat_id, "success I guess")
+      text == "/beep" ->
+        Dice.Connection.send_message(chat_id, "boop")
 
-      text == "/quote" ->
-        Dice.Connection.send_message(chat_id, Enum.random(Lists.quotes()))
+      #      text == "/quote" ->
+      #        Dice.Connection.send_message(chat_id, Enum.random(Lists.quotes()))
 
       text == "/paw" ->
         Dice.Connection.send_sticker(

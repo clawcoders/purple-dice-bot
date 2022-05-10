@@ -5,9 +5,9 @@
 # is restricted to this project.
 
 # General application configuration
-use Mix.Config
+import Config
 
-#config :dice,
+# config :dice,
 #  ecto_repos: [Dice.Repo]
 
 # Configures the endpoint
